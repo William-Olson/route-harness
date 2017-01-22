@@ -1,5 +1,5 @@
 {
-  "name": "express-harness",
+  "name": "route-harness",
   "version": "1.0.0",
   "description": "Route harness for express",
   "main": "index.js",

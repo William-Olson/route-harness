@@ -1,22 +1,20 @@
 const express = require('express');
 
+const Wrapper = require('./Wrapper');
+const AsyncWrapper = require('./AsyncWrapper');
+
 module.exports = class Harness {
 
   /**
    * Takes the express() instance as first parameter and options as 2nd.
-   * Available options include async (boolean), inject (object), and
-   * customWrapper (function)
+   * Available options include 'async' (boolean), 'inject' (object), and
+   * 'customWrapper' (function)
    */
   constructor(app, opts = {}) {
     this._app = app;
-    this._router = express.Router();
-    this._opts = opts;
-
-    if (opts.async) {
-      this._Wrapper = require('./AsyncWrapper');
-    } else {
-      this._Wrapper = require('./Wrapper');
-    }
+    this._Wrapper = opts.async ? AsyncWrapper : Wrapper;
+    this._injectables = opts.inject;
+    this._customWrap = opts.customWrapper;
   }
 
   /**
@@ -28,15 +26,15 @@ module.exports = class Harness {
       mdlwr = [];
     }
     const router = express.Router();
-    const wrapper = new this._Wrapper(router, this._opts.customWrapper);
+    const wrapper = new this._Wrapper(router, this._customWrap);
 
     let injectables = {};
-    if (typeof this._opts.inject === 'object') {
-      injectables = this._opts.inject;
+    if (typeof this._injectables === 'object') {
+      injectables = this._injectables;
     }
 
     const params = Object.assign({}, { harness: wrapper }, injectables);
-    wrapper.wrapRoutes(new RouteClass(params));
+    wrapper.wrapRoutes(new RouteClass(params), path);
 
     this._app.use(path, mdlwr, router);
   }

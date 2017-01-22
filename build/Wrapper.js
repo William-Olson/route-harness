@@ -20,11 +20,22 @@ module.exports = class Wrapper {
    * Takes an instance of a routes file class.
    * Calls the express router methods and wraps the callbacks.
    */
-  wrapRoutes(routes) {
+  wrapRoutes(routes, parentPath) {
     const wrap = this._custom || this._wrap;
     for (let route of this._queued) {
       const { type, path, mdlwr, fn } = route;
-      this._router[type](path, mdlwr, wrap(fn.bind(routes)));
+
+      // provide route info to the wrapper
+      const routeInfo = {
+        method: type,
+        fullPath: `${parentPath}${path}`.replace(/\/\//g, '/'),
+        basePath: parentPath,
+        subPath: path,
+        routeClass: routes.constructor.name,
+        handler: fn.name
+      };
+
+      this._router[type](path, mdlwr, wrap(fn.bind(routes), routeInfo));
     }
   }
 
@@ -32,11 +43,12 @@ module.exports = class Wrapper {
    * Provides a wrapped function that calls next on errors and sends the return
    * value of the wrapped function if no errors occur.
    */
-  _wrap(fn) {
+  _wrap(fn, routeInfo) {
     return (req, res, next) => {
 
       try {
 
+        req.routeInfo = routeInfo;
         const result = fn(req, res, next);
 
         if (result) {

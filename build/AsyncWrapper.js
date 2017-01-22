@@ -12,10 +12,11 @@ module.exports = class AsyncWrapper extends Wrapper {
    * Provides a wrapped function that calls next on errors and sends the
    * awaited return value of the wrapped function if no errors occur.
    */
-  _wrap(fn) {
+  _wrap(fn, routeInfo) {
     return (() => {
       var _ref = _asyncToGenerator(function* (req, res, next) {
         try {
+          req.routeInfo = routeInfo;
           const results = yield fn(req, res, next);
           if (results) {
             res.send(results);
