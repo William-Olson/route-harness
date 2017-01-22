@@ -1,0 +1,29 @@
+{
+  "name": "express-harness",
+  "version": "1.0.0",
+  "description": "Route harness for express",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "babel ./lib --out-dir ./build"
+  },
+  "babel": {
+    "plugins": [
+      "transform-async-to-generator"
+    ]
+  },
+  "keywords": [
+    "route-harness",
+    "express",
+    "harness",
+    "wrapper",
+    "routes"
+  ],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "babel-cli": "^6.22.2",
+    "babel-plugin-transform-async-to-generator": "^6.16.0",
+    "babel-register": "^6.18.0"
+  }
+}
