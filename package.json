@@ -1,15 +1,25 @@
 {
   "name": "route-harness",
   "version": "1.0.0",
-  "description": "Route harness for express",
+  "description": "Route harness for Express. Write your routes with classes!",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "babel ./lib --out-dir ./build"
+    "build": "babel ./lib --out-dir ./build",
+    "prepublish": "npm run build"
   },
   "babel": {
     "plugins": [
-      "transform-async-to-generator"
+      "transform-async-to-generator",
+      "transform-es2015-parameters",
+      "transform-es2015-destructuring",
+      "transform-es2015-block-scoping",
+      [
+        "transform-es2015-classes",
+        {
+          "loose": true
+        }
+      ]
     ]
   },
   "keywords": [
@@ -19,11 +29,20 @@
     "wrapper",
     "routes"
   ],
-  "author": "",
+  "author": "Will Olson",
+  "homepage": "http://github.com/William-Olson/route-harness",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/William-Olson/route-harness.git"
+  },
   "license": "ISC",
   "devDependencies": {
     "babel-cli": "^6.22.2",
     "babel-plugin-transform-async-to-generator": "^6.16.0",
+    "babel-plugin-transform-es2015-block-scoping": "^6.22.0",
+    "babel-plugin-transform-es2015-classes": "^6.22.0",
+    "babel-plugin-transform-es2015-destructuring": "^6.22.0",
+    "babel-plugin-transform-es2015-parameters": "^6.22.0",
     "babel-register": "^6.18.0"
   }
 }

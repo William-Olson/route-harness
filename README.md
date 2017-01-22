@@ -97,7 +97,7 @@ const opts = {
 
 - async
 
-  If you would like to use the default async/await wrapper you can provide the async option true. This assumes all your class methods will return a promise or are async functions. (requires babel or other async provider).
+  If you would like to use the default async/await wrapper you can provide the async option true. This assumes all your class methods will return a promise or are async functions. (requires babel or other async provider). The async option is ignored if the customWrapper option is provided since you can choose to await the handler yourself in the customWrapper's return function.
 
 - inject
 
