@@ -1,7 +1,7 @@
 {
   "name": "route-harness",
   "version": "1.3.3",
-  "description": "Route harness for Express. Write your routes with classes!",
+  "description": "Route harness for Express with error wrapping & dependency injection.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",

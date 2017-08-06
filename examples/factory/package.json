@@ -1,0 +1,12 @@
+{
+  "name": "factory-example",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "DEBUG=*,-express* node ./www"
+  },
+  "dependencies": {
+    "debug": "^2.6.8",
+    "express": "~4.15.2"
+  }
+}
