@@ -1,6 +1,6 @@
 {
   "name": "route-harness",
-  "version": "1.3.3",
+  "version": "1.4.0",
   "description": "Route harness for Express with error wrapping & dependency injection.",
   "main": "index.js",
   "scripts": {
