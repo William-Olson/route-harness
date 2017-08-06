@@ -176,7 +176,7 @@ const opts = {
   inject: { db, cheerio /*, ...etc. */ },
 
   // override default harness wrapper with a custom one
-  customWrapper: (handler, info) => {
+  customWrapper: (handler, info, injectedProps) => {
 
     const route = `${info.method} '${info.fullPath}'`;
     const name = `${info.routeClass}.${info.handler}`;

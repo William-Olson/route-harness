@@ -3,17 +3,18 @@
   Custom harness function for wrapping routes
 
 */
-function customWrapper(fn, info)
+function customWrapper(fn, info, { logger })
 {
 
+  const log = logger('harness');
   const route = `${info.method} '${info.fullPath}'`;
   const name = `${info.routeClass}.${info.handler}`;
 
-  console.log(`[harness] mapping: ${route} to ${name}`);
+  log(`mapping: ${route} to ${name}`);
 
   return async (req, res, next) => {
 
-    console.log(`[harness] route hit: ${route} ${name}`);
+    log(`route hit: ${route} ${name}`);
 
     try {
       const result = await fn(req, res);
