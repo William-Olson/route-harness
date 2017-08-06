@@ -149,17 +149,13 @@ If an error is thrown within a route class method, it will be caught and forward
 
 #### Class Parameters
 
-**harness.use(...)**
+##### When using the _harness.use(...)_ approach
 
 You will by default get an object passed to your route class constructors containing a harness property. Note that this is not the same harness object that is returned from the `new Harness()` call.  The harness property on the param object allows you to define your routes with the `get, post, put, delete` methods.  The param object will also include any properties that were passed in with the `inject` option.
 
-**harness.mountRoutes(...)**
+##### When using the _harness.mountRoutes(...)_ approach
 
 When implementing the `harness.mountRoutes` style (rather than the `harness.use` approach), your route class constructors by default will get an object as a param.  This object will have any injectables provided via the inject options as well as a restHarness property for establishing your routes from within the constructor.
-
-**factory option**
-
-You provide params =)
 
 #### Logging
 
