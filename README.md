@@ -214,6 +214,7 @@ const opts = {
       }
       catch (error) {
         console.error(`[harness] error in route ${route}: `, error);
+        next(error);
       }
 
     };
