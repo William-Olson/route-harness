@@ -12,15 +12,15 @@ Simple harness for express that wraps all routes in a common error handler, and 
 
 Benifits
 
- - no need for any try catch blocks in route function bodies
- - no need for `require('express')` in every single route file (in fact none will need this)
- - simplify route indentation and avoid callback hell by using async/await in route methods (all route methods are awaited by default)
- - customizable error handling that allows processing errors just the way you want
+ - customized initialization of route classes via factory or inject options (pass the params you need to route class constructors / perfect for abstracted dependency injection)
  - decoupled mounting of routes allowing a flexible way of initializing route paths and base paths
- - customized initialization of route classes via factory or inject options (pass the params you need to route class constructors)
+ - no need for `require('express')` in every single route file (in fact none will need this)
+ - write legible code that allows you to focus on only the important logic that each route implements
+ - simplify route indentation and avoid callback hell by using async/await in route methods
+ - customizable error handling that allows processing errors in a centralized location just the way you want
+ - no try/catch blocks in route function bodies needed just throw and let it bubble up to the customWrapper
  - easy and customizable logging of route interactions via the customWrapper option
- - pass in middleware to routes the same way you are familiar with
- - legible code that allows you to focus on only the important logic that each route implements
+ - pass in middleware to routes the same way you are familiar with in express
 
 
 ## Most basic usage
@@ -48,10 +48,16 @@ _In your `./routes/Users.js` file:_
 
 module.exports = class UsersRoutes {
 
-  constructor({ harness })
+  constructor(args)
   {
+    // the route path mapper comes in the args by default
+    const harness = args.harness;
+
     harness.get('/', this.getUsers);
     harness.get('/:id', [ /* someMiddleware */ ], this.getById);
+
+    // you can use your inject options here as well
+    // this.myInjectedDependency = args.myInjectedDependency;
   }
 
   async getUsers(req, res)
@@ -79,30 +85,42 @@ module.exports = class UsersRoutes {
 
 ## Factory Usage
 
-Using the factory style, you can easily customize class constructors. As an example lets
-provide a db param to all our route class constructors.
+Using the factory style approach, you can easily customize class constructors
+(Note that this approach is a bit different from the basic usage example above).
+
+
+As an example lets provide a db param to all our route class constructors.
 
 
 ```javascript
+const express = require('express');
+const Harness = require('route-harness');
+
+// assuming you have some database client dependency
+const db = require('./some-db-client.js');
 
 // ...
 
 const app = express();
-const db = require('./some-db-client.js');
 
 // init harness
-const harness = new Harness(app);
+const harness = new Harness(app, {
 
-// define the factory option, harness.restHarness is a provider for defining
-// routes within your route classes
-const opts = {
-  factory: T => new T(harness.restHarness, db),
-};
+  // Define the factory option...
+  //
+  // The first argument of this function is the RouteClass that you instantiate
+  // in your own custom way, the second argument is the object containing the
+  // inject data.
+  //
+  // There will be a restHarness object injected by default for mapping the endpoint paths
+  // from within the class.
 
-// set options
-harness.configure(opts);
+  factory: (T, injectedArgs) => new T(injectedArgs.restHarness, db),
 
-// we call mountRoutes instead of use here to register the class
+});
+
+// we call `mountRoutes` instead of `use` here..
+// this tells the route-harness to register it but not instantiate it
 harness.mountRoutes('/users', require('./routes/Users.js'));
 
 ```
@@ -117,7 +135,7 @@ module.exports = class UsersRoutes {
   {
     this._db = db;
 
-    // restHarness needs the this context which uses the class name
+    // restHarness needs the `this` context which uses the class name
     // for properly wiring up subroutes to the base route path
     const harness = restHarness(this);
 
@@ -183,11 +201,20 @@ const opts = {
 
     console.log(`[harness] mapping: ${route} to ${name}`);
 
-    return (req, res, next) => {
+    return async (req, res, next) => {
 
       console.log(`[harness] route hit: ${route} ${name}`);
 
-      // call handler(req, res) here and handle errors and return values
+      // call the handler here and process errors and return values
+      try {
+        const result = await handler(req, res);
+        if (result) {
+          res.send(result);
+        }
+      }
+      catch (error) {
+        console.error(`[harness] error in route ${route}: `, error);
+      }
 
     };
   }
