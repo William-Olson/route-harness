@@ -2,7 +2,7 @@
 
 Simple express harness
 
-- wraps all routes in a common error handler
+- wrap all routes in a common error handler
 - define your routes using es6 classes
 
 ```bash
@@ -67,6 +67,8 @@ module.exports = class UsersRoutes {
 };
 ```
 
+For more examples see the [examples](https://github.com/William-Olson/route-harness/tree/master/examples) directory.
+
 #### Return Values
 
 If you return a value from your route class method, the value will be sent with the `res.send` method. Otherwise if a falsy value is returned (or there is no return value) you are expected to handle the response in the class method yourself.
@@ -91,13 +93,13 @@ All options are optional and calling `new Harness(app)` using 1 param is support
 
 const opts = {
 
-  // custom route class instantiation
+  // 1) factory: custom route class instantiation
   factory: (T, deps) => new T(deps),
 
-  // helpers passed to class constructors
+  // 2) inject: dependencies passed to class constructors
   inject: { db, cheerio /*, ...etc. */ },
 
-  // override default harness wrapper with a custom one
+  // 3) customWrapper: override default wrapper with a custom one
   customWrapper: (handler, info, injectedProps) => {
 
     const route = `${info.method} '${info.fullPath}'`;
@@ -133,11 +135,11 @@ const opts = {
 
 - inject
 
-  Inject option allows you to provide helpers or dependencies that will be passed as properties of the first parameter of the class constructor of your route files. If you are providing the custom factory option, these injected dependencies will be provided as the second argument to your factory function.
+  Inject option allows you to provide dependencies that will be passed as properties of the first parameter of the class constructor of your route files. If you are providing the custom factory option, these injected dependencies will be provided as the second argument to your factory function.
 
 - customWrapper
 
-  If you feel like using your own custom wrapper, you can provide the customWrapper option with a high order function that takes in a route class method as its param and returns an express looking function that will invoke the route class method in its body. It will also receive an info object as its second param which will contain properties describing the route being hit and the class and class method names being used.
+  Provide the customWrapper option to customize your centralized route wrapper. This option is a high order function that takes in a RouteClass method (route handler), an info object, and injected dependencies as its parameters, and returns an express looking function.  The customWrapper's returned function should invoke the RouteClass method (the route handler) in its body to delegate the incoming request to, it should also handle any errors thrown by the route handler method. The info parameter object will contain properties describing the route being hit and the class and method name being used.
 
 
 ## API
