@@ -2,13 +2,11 @@
 
 module.exports = class Info {
 
-  constructor({ harness, tester })
+  constructor({ router, tester })
   {
 
     this._tester = tester;
-
-    harness.get('/', this.getInfo);
-    harness.get('/test', this.testMessage);
+    router.get('/', this.getInfo);
 
   }
 
@@ -17,19 +15,11 @@ module.exports = class Info {
 
     return {
       try: [
-        '/test',
         '/users',
         '/users/1',
-        'users/2'
+        '/users/2'
       ]
     };
-
-  }
-
-  testMessage()
-  {
-
-    return { message: this._tester.test() };
 
   }
 

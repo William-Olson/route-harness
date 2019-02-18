@@ -2,8 +2,11 @@
 
 module.exports = class Info {
 
-  constructor({ router, tester, logger })
+  constructor(harnessDependency)
   {
+
+    // get this class's specific dependencies from harness dependency
+    const { tester, logger, router } = harnessDependency.getDeps(this.constructor.name);
 
     this._tester = tester;
     this._logger = logger('info-routes');

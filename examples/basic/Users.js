@@ -5,14 +5,11 @@ const FAKE_USERS = [
 
 module.exports = class Users {
 
-  constructor({ harness, tester })
+  constructor({ router })
   {
 
-    this._tester = tester;
-
-    harness.get('/', this.getFakeUsers);
-    harness.get('/test', this.test);
-    harness.get('/:id', this.getFakeUserById);
+    router.get('/', this.getFakeUsers);
+    router.get('/:id', this.getFakeUserById);
 
   }
 
@@ -34,14 +31,6 @@ module.exports = class Users {
     }
 
     return FAKE_USERS.find(u => u.id === id);
-
-  }
-
-
-  test()
-  {
-
-    return { message: this._tester.test() };
 
   }
 

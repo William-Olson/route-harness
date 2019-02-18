@@ -1,11 +1,12 @@
 {
-  "name": "basic-example",
+  "name": "alt-example",
   "version": "0.0.0",
   "private": true,
   "scripts": {
     "start": "DEBUG=harness* node ./server.js"
   },
   "dependencies": {
-    "express": "~4.15.2"
+    "debug": "2.6.8",
+    "express": "^4.16.4"
   }
 }

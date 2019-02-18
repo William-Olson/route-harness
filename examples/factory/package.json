@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "DEBUG=*,-express* node ./www"
+    "start": "DEBUG=*,-express* node ./server.js"
   },
   "dependencies": {
     "debug": "^2.6.8",

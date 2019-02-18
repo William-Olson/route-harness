@@ -5,6 +5,7 @@ module.exports = class Info {
   constructor({ router, tester, logger })
   {
 
+    // console.log('logger: ', logger);
     this._tester = tester;
     this._logger = logger('info-routes');
 

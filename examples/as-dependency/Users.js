@@ -5,13 +5,13 @@ const FAKE_USERS = [
 
 module.exports = class Users {
 
-  constructor({ router, tester })
+  constructor(harnessDependency)
   {
 
-    this._tester = tester;
+    // get this class's specific router object
+    const router = harnessDependency.getRouterForClass(this.constructor.name);
 
     router.get('/', this.getFakeUsers);
-    router.get('/test', this.test);
     router.get('/:id', this.getFakeUserById);
 
   }
@@ -33,13 +33,6 @@ module.exports = class Users {
     }
 
     return FAKE_USERS.find(u => u.id === id);
-
-  }
-
-  test()
-  {
-
-    return { message: this._tester.test() };
 
   }
 
