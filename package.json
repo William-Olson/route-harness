@@ -1,26 +1,16 @@
 {
   "name": "route-harness",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "Route harness for Express with error wrapping & dependency injection.",
   "main": "index.js",
+  "types": "./build/*.d.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "babel ./lib --out-dir ./build",
+    "build": "npm run clean && tsc -p .",
+    "lint": "tslint -p tsconfig.json",
+    "format": "prettier --write \"lib/**/*.ts\"",
+    "clean": "rm -rf ./build || true",
     "prepublish": "npm run build"
-  },
-  "babel": {
-    "plugins": [
-      "transform-async-to-generator",
-      "transform-es2015-parameters",
-      "transform-es2015-destructuring",
-      "transform-es2015-block-scoping",
-      [
-        "transform-es2015-classes",
-        {
-          "loose": true
-        }
-      ]
-    ]
   },
   "keywords": [
     "route-harness",
@@ -36,16 +26,13 @@
     "url": "git://github.com/William-Olson/route-harness.git"
   },
   "license": "ISC",
-  "devDependencies": {
-    "babel-cli": "^6.22.2",
-    "babel-plugin-transform-async-to-generator": "^6.16.0",
-    "babel-plugin-transform-es2015-block-scoping": "^6.22.0",
-    "babel-plugin-transform-es2015-classes": "^6.22.0",
-    "babel-plugin-transform-es2015-destructuring": "^6.22.0",
-    "babel-plugin-transform-es2015-parameters": "^6.22.0",
-    "babel-register": "^6.18.0"
-  },
   "dependencies": {
-    "express": "^4.16.4"
+    "express": "^4.18.1"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.13",
+    "prettier": "^2.6.2",
+    "tslint": "^6.1.3",
+    "tslint-config-prettier": "^1.18.0"
   }
 }

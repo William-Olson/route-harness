@@ -1,1 +1,1 @@
-module.exports = require('./build/Harness');
+module.exports = require('./build/RouteHarness').default;
