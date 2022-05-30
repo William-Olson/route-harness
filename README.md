@@ -4,6 +4,8 @@
 
 [![Language grade: JavaScript](https://img.shields.io/lgtm/grade/javascript/g/William-Olson/route-harness.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/William-Olson/route-harness/context:javascript)
 
+[![npm](https://img.shields.io/npm/v/route-harness?logo=NPM)](https://www.npmjs.com/package/route-harness)
+
 Simple express harness
 
 - wrap all routes in a common error handler
