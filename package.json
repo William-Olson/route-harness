@@ -1,9 +1,9 @@
 {
   "name": "route-harness",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "description": "Simple route harness for Express.",
   "main": "index.js",
-  "types": "./build/*.d.ts",
+  "types": "./build/index.d.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "npm run clean && tsc -p .",
