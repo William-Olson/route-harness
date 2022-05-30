@@ -5,7 +5,7 @@ export type FactoryFunction = <T>(C: RouteClass<T>, args: RouteClassParam<T>) =>
 export type LooseFactory = (C: RouteClass<any>, args: RouteClassParam<any>) => any;
 
 export interface IFactory<T> {
-  createInstance(args: RouteClassParam<T>): T;
+  createInstance(args?: RouteClassParam<T>): T;
 }
 
 export class Factory<T> implements IFactory<T> {

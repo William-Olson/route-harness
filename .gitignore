@@ -4,3 +4,6 @@ node_modules/
 build/
 
 ./examples/**/package-lock.json
+
+./route-harness.d.ts
+

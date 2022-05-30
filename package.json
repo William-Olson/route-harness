@@ -2,11 +2,18 @@
   "name": "route-harness",
   "version": "2.1.1",
   "description": "Simple route harness for Express.",
-  "main": "index.js",
-  "types": "./build/index.d.ts",
+  "types": "./route-harness.d.ts",
+  "main": "./index.js",
+  "type": "module",
+  "exports": {
+    ".": {
+      "require": "./index.js",
+      "import": "./build/index.js"
+    }
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "npm run clean && tsc -p .",
+    "build": "npm run clean && tsc -p . && ./fix-typings.sh",
     "lint": "tslint -p tsconfig.json",
     "format": "prettier --write \"lib/**/*.ts\"",
     "clean": "rm -rf ./build || true",
