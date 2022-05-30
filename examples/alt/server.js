@@ -1,5 +1,5 @@
 const express = require('express');
-const logger = require('debug')
+const logger = require('debug');
 const http = require('http');
 const RouteHarness = require('../..');
 const tester = { test: () => 'testing' };
