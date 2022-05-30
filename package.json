@@ -1,7 +1,7 @@
 {
   "name": "route-harness",
   "version": "2.1.0",
-  "description": "Route harness for Express with error wrapping & dependency injection.",
+  "description": "Simple route harness for Express.",
   "main": "index.js",
   "types": "./build/*.d.ts",
   "scripts": {
