@@ -1,6 +1,6 @@
 {
   "name": "route-harness",
-  "version": "2.1.1",
+  "version": "2.1.2",
   "description": "Simple route harness for Express.",
   "types": "./route-harness.d.ts",
   "main": "./index.js",
