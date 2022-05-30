@@ -4,13 +4,7 @@
   "description": "Simple route harness for Express.",
   "types": "./route-harness.d.ts",
   "main": "./index.js",
-  "type": "module",
-  "exports": {
-    ".": {
-      "require": "./index.js",
-      "import": "./build/index.js"
-    }
-  },
+  "exports": "./build/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "npm run clean && tsc -p . && ./fix-typings.sh",
