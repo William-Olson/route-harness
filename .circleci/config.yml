@@ -1,0 +1,22 @@
+version: 2.1
+orbs:
+  node: circleci/node@4.7
+jobs:
+  build-and-test:
+    docker:
+      - image: cimg/node:17.2
+    steps:
+      - checkout
+      - node/install-packages:
+          pkg-manager: npm
+      - run:
+          name: Linting Code
+          command: npm run lint
+      - run:
+          name: Transpiling Code
+          command: npm run build
+
+workflows:
+  default:
+    jobs:
+      - build-and-test
