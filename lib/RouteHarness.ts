@@ -76,10 +76,11 @@ export class RouteHarness {
 
     harnessRouter.getRouterForClass = (className: string): HarnessDependency => {
       const entry = this._wrapQueue.find((e) => e.className === className);
+      const routerKey: string = 'router';
       if (!entry) {
         throw new Error(`Can't find router for class: ${className}`);
       }
-      return entry.data['router'] as HarnessDependency;
+      return entry.data[routerKey] as HarnessDependency;
     };
 
     harnessRouter.getDeps = (className): Injectables => {
@@ -132,6 +133,7 @@ export class RouteHarness {
 
   */
   async use<T>(path: string, mdlwrOrClass: Handler[] | RouteClass<T>, SomeClass?: RouteClass<T>) {
+    const routerKey: string = 'router';
     if (!SomeClass && !Array.isArray(mdlwrOrClass)) {
       SomeClass = mdlwrOrClass as RouteClass<T>;
       mdlwrOrClass = [];
@@ -159,9 +161,9 @@ export class RouteHarness {
       const routesInstance = await this._factory(SomeClass, params as RouteClassParam<T>);
 
       // after sub-routes are defined, map the base path and middleware
-      params['router']._useInstance(path, mdlwrOrClass, routesInstance);
+      params[routerKey]._useInstance(path, mdlwrOrClass, routesInstance);
     } catch (e) {
-      console.error(`Problem creating routes ${path} (${SomeClass.name})`, e);
+      throw new Error(`Problem creating routes ${path} (${SomeClass.name}) \n${(e as Error).toString()}`);
     }
   }
 }

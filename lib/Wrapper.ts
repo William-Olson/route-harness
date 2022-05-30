@@ -73,7 +73,7 @@ export class Wrapper<T> {
 
       // provide route info to the wrapper
       const routeInfo: RouteInformation = {
-        method: method,
+        method,
         fullPath: `${parentPath}${path}`.replace(/\/\//g, '/'),
         basePath: parentPath,
         subPath: path,

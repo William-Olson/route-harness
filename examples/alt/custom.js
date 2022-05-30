@@ -23,8 +23,7 @@ function customWrapper(fn, info, { logger })
       }
     }
     catch(err) {
-      console.log(err);
-      next(err);
+      next(err); // logs the error
     }
 
   };

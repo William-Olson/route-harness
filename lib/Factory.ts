@@ -1,5 +1,5 @@
-export type RouteClassParam<T> = T extends { new (args: infer P): T } ? P : never;
-export type RouteClass<T> = { new (args: RouteClassParam<T>): T };
+export type RouteClassParam<T> = T extends new (args: infer P) => T ? P : never;
+export type RouteClass<T> = new (args: RouteClassParam<T>) => T;
 
 export type FactoryFunction = <T>(C: RouteClass<T>, args: RouteClassParam<T>) => T;
 export type LooseFactory = (C: RouteClass<any>, args: RouteClassParam<any>) => any;
@@ -26,10 +26,10 @@ export class Factory<T> implements IFactory<T> {
   }
 }
 
-export const defaultFactory: FactoryFunction = function defaultFactory<T>(
+export const defaultFactory: FactoryFunction = <T>(
   C: RouteClass<T>,
   args: RouteClassParam<T>,
-): T {
+): T => {
   const factory: IFactory<T> = new Factory(C);
   return factory.createInstance(args);
 };
