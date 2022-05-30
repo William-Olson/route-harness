@@ -2,7 +2,7 @@
   "name": "route-harness",
   "version": "2.1.3",
   "description": "Simple route harness for Express.",
-  "types": "./route-harness.d.ts",
+  "types": "./build/index.d.ts",
   "main": "./index.js",
   "exports": "./build/index.js",
   "scripts": {
