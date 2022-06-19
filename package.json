@@ -1,13 +1,13 @@
 {
   "name": "route-harness",
-  "version": "2.1.4",
+  "version": "2.1.5",
   "description": "Simple route harness for Express.",
-  "types": "./build/index.d.ts",
+  "types": "./build/types/index.d.ts",
   "main": "./index.js",
   "exports": "./build/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "npm run clean && tsc -p . && ./fix-typings.sh",
+    "build": "npm run clean && tsc -p .",
     "lint": "tslint -p tsconfig.json",
     "format": "prettier --write \"lib/**/*.ts\"",
     "clean": "rm -rf ./build || true",

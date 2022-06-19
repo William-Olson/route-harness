@@ -5,6 +5,7 @@
     "rootDir": "./lib",
     "declaration": true,
     "outDir": "./build",
+    "declarationDir": "./build/types",
     "allowJs": false,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
